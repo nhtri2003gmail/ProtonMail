@@ -76,6 +76,14 @@ def CreateProtonVPN():
     element = driver.find_element_by_name('submitBtn')
     element.click()
 
+    while True:
+        try:
+            driver.find_element_by_class_name('humanVerification-completeSetup-create').click()
+            break
+        except:
+            pass
+        time.sleep(0.1)
+
 def SaveCredential():
     try:
         f = open('ProtonMail.txt', 'a')
@@ -91,11 +99,11 @@ def SaveCredential():
     
 
 if __name__=="__main__":
+    ctypes.windll.user32.MessageBoxW(0, "You cannot touch mouse or keyboard after press OK\n\nWhen there is a CAPTCHA, you can use your mouse and keyboard", "Information!", 0)
+    
     CreateProtonMail()
     CreateProtonVPN()
-    ctypes.windll.user32.MessageBoxW(0, "Please verify CAPTCHA manually", "Information!", 0)
-    ctypes.windll.user32.MessageBoxW(0, "After verifying CAPTCHA, please wait until it's DONE creating account", "Information!", 0)
-
+    
     Ask = 0
     while True:
         Ask = ctypes.windll.user32.MessageBoxW(0, "Did you create a ProtonMail?", "Question?", 3)
